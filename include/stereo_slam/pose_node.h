@@ -1,6 +1,7 @@
 #ifndef _POSE_NODE_H_
 #define _POSE_NODE_H_
 
+#include <g2o/types/slam3d/vertex_se3.h>
 #include "stereo_slam/features3d.h"
 
 namespace stereo_slam
@@ -17,7 +18,7 @@ public:
    */
   PoseNode();
 
-  inline setFeatures(const Features3D& features)
+  inline void setFeatures(const Features3D& features)
   {
     features_ = features;
   }

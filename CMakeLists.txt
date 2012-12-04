@@ -21,8 +21,13 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined services
 #rosbuild_gensrv()
 
+find_package(libg2o REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS} ${libg2o_INCLUDE_DIRS})
+include_directories(/usr/include/suitesparse/)
+
+rosbuild_add_library(${PROJECT_NAME} src/features3d_pose_slam.cpp)
+
 #common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)

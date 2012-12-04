@@ -1,6 +1,6 @@
 <stack>
-  <name>vislam</name>
-  <description>Visual Graph-based SLAM</description>
+  <name>stereo_slam</name>
+  <description>Visual Graph-based SLAM based on Stereo Vision</description>
   <author>Stephan Wirth</author>
   <maintainer email="stephan.wirth@uib.es">Stephan Wirth</maintainer>
   <license>GPL v3</license>
