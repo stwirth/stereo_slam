@@ -10,7 +10,7 @@ struct Features3D
 {
   std::vector<cv::KeyPoint> key_points;
   cv::Mat descriptors;
-  std::vector<cv::Point3f> points;
+  std::vector<cv::Point3d> points;
 };
 
 }
