@@ -103,7 +103,7 @@ std::vector<stereo_slam::PoseNode*> stereo_slam::Features3DPoseSlam::findMatchCa
 bool stereo_slam::Features3DPoseSlam::haveOverlap(
     const PoseNode* node1, const PoseNode* node2) const
 {
-  // TODO insert fancy frustum intersection here
+  // TODO insert fancy frustum/AABB intersection here
   return true;
 }
 

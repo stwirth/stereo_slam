@@ -25,7 +25,16 @@ find_package(libg2o REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS} ${libg2o_INCLUDE_DIRS})
 include_directories(/usr/include/suitesparse/)
 
-rosbuild_add_library(${PROJECT_NAME} src/features3d_pose_slam.cpp)
+rosbuild_add_library(${PROJECT_NAME} 
+  src/features3d_pose_slam.cpp
+  src/orb_extractor.cpp
+  src/stereo_matching.cpp
+  )
+
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${EXECUTABLE_OUTPUT_PATH}/test)
+rosbuild_add_gtest(test/image_proc_test test/image_proc_test.cpp)
+
+target_link_libraries(test/image_proc_test gtest_main)
 
 #common commands for building c++ executables and libraries
 #target_link_libraries(${PROJECT_NAME} another_library)
