@@ -2,6 +2,7 @@
 #include "stereo_slam/stereo_matcher.h"
 
 stereo_slam::StereoMatcher::Params::Params() :
+  max_octave_diff(1),
   max_y_diff(2.0),
   min_disparity(1.0),
   max_disparity(10000.0),
@@ -21,8 +22,9 @@ bool stereo_slam::StereoMatcher::isMatch(
     const cv::KeyPoint& kp_left, const cv::KeyPoint& kp_right,
     float max_dist_2, float* distance) const
 {
-  // same octave
-  if (kp_left.octave != kp_right.octave)
+  // octave constraint
+  int octave_diff = abs(kp_left.octave - kp_right.octave);
+  if (octave_diff > params_.max_octave_diff)
     return false;
 
   // epipolar constraint
@@ -71,7 +73,7 @@ void stereo_slam::StereoMatcher::match(
       if (isMatch(image_left, image_right, key_points_left[i],
             key_points_right[j], squared_max_dist, &distance))
       {
-        cv::DMatch match(j, i, -1, distance);
+        cv::DMatch match(i, j, -1, distance);
         matches.push_back(match);
       }
     }

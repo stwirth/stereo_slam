@@ -25,6 +25,7 @@ public:
      */
     Params();
 
+    int max_octave_diff;
     float max_y_diff;
     float min_disparity;
     float max_disparity;

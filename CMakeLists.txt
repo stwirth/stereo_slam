@@ -31,6 +31,17 @@ rosbuild_add_library(${PROJECT_NAME}
   src/stereo_matcher.cpp
   )
 
+rosbuild_add_library(stereo_matching
+  src/stereo_matcher.cpp
+  src/match_stats.cpp)
+
+rosbuild_add_executable(stereo_stats src/tools/stereo_stats.cpp)
+rosbuild_link_boost(stereo_stats program_options)
+target_link_libraries(stereo_stats stereo_matching)
+rosbuild_add_executable(stereo_match src/tools/stereo_match.cpp)
+rosbuild_link_boost(stereo_match program_options)
+target_link_libraries(stereo_match stereo_matching)
+
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${EXECUTABLE_OUTPUT_PATH}/test)
 rosbuild_add_gtest(test/image_proc_test test/image_proc_test.cpp)
 

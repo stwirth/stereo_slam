@@ -2,23 +2,29 @@
 #include <boost/progress.hpp>
 #include <opencv2/nonfree/nonfree.hpp>
 
-#include "stereo_slam/stereo_matching.h"
+#include "stereo_slam/stereo_matcher.h"
 
 TEST(StereoMatchingTests, matchTests)
 {
-  cv::initModule_nonfree();
+  stereo_slam::StereoMatcher matcher;
 
+  cv::initModule_nonfree();
   cv::Ptr<cv::Feature2D> sift = Algorithm::create<Feature2D>(
       "Feature2D.SIFT");
+  std::vector<cv::KeyPoint> key_points_left, key_points_right;
+  cv::Mat descriptors_left, descriptors_right;
+  (*sift)(image_left, cv::noArray(), key_points_left, descriptors_left);
+  (*sift)(image_right, cv::noArray(), key_points_right, descriptors_right);
 
-  cv::Mat descriptors;
-  std::vector<cv::KeyPoint> key_points;
-  (*sift)(image, cv::noArray(), key_points, descriptors);
+  // do heavy load matching as "ground truth"
+  std::vector<cv::DMatch> good_matches;
+  feature_matching::threshold_matching(image_left, image_right,
+      key_points_left, key_points_right,
+      descriptors_left, descriptors_right, 0.5, good_matches);
 
-  using stereo_slam::stereo_matching::match;
+  std::cout << good_matches.size() << " good matches.";
 
-  cv::KeyPointDetector::Ptr
-  match(image_left, image_right, key_points_left, key_points_right,
+  matcher.match(image_left, image_right, key_points_left, key_points_right,
         squared_max_dist, matches);
   {
     boost::progress_timer t;
