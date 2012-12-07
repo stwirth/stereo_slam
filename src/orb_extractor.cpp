@@ -1,5 +1,5 @@
 #include "stereo_slam/orb_extractor.h"
-#include "stereo_slam/stereo_matching.h"
+#include "stereo_slam/stereo_matcher.h"
 #include "stereo_slam/features3d.h"
 #include "stereo_slam/types.h"
 
@@ -23,8 +23,9 @@ stereo_slam::Features3D stereo_slam::ORBExtractor::extract(
   orb_(image_right, cv::noArray(), key_points_right, cv::noArray());
 
   // perform stereo matching
+  StereoMatcher matcher;
   std::vector<cv::DMatch> matches;
-  stereo_matching::match(image_left, image_right,
+  matcher.match(image_left, image_right,
       key_points_left, key_points_right, MAX_DIST_2, matches);
 
   // extract descriptors, key points, and 3D for matched points

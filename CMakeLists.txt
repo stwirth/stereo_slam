@@ -28,7 +28,7 @@ include_directories(/usr/include/suitesparse/)
 rosbuild_add_library(${PROJECT_NAME} 
   src/features3d_pose_slam.cpp
   src/orb_extractor.cpp
-  src/stereo_matching.cpp
+  src/stereo_matcher.cpp
   )
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${EXECUTABLE_OUTPUT_PATH}/test)
